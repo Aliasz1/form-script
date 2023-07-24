@@ -8,11 +8,20 @@
 
 #imageList li {
     display: flex;
+    flex-direction: column; /* Change to column */
     justify-content: center;
     align-items: center;
+    text-align: center; /* Center the content horizontally */
 }
 
 #imageList img {
     max-width: 100%;
     height: auto;
+}
+
+#imageList span,
+#imageList label,
+#imageList button {
+    margin-top: 5px; /* Add some spacing between elements */
+    width: 100%; /* Make the elements take the full width */
 }

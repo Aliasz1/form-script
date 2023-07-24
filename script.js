@@ -14,30 +14,30 @@
                     img.src = file.webContentLink || 'https://via.placeholder.com/150';
                     img.alt = file.name;
                     li.appendChild(img);
-            
+    
                     // Add name below the image
                     const name = document.createElement('span');
                     name.textContent = file.name;
                     li.appendChild(name);
-            
+    
                     // Add size selection dropdown
                     const sizeDropdown = createDropdown('Size', ['Small', 'Medium', 'Large']);
                     li.appendChild(sizeDropdown);
-            
+    
                     // Add amount selection dropdown
                     const amountDropdown = createDropdown('Amount', ['1', '2', '3', '4', '5']);
                     li.appendChild(amountDropdown);
-            
+    
                     // Add a button
                     const button = document.createElement('button');
                     button.textContent = 'Add to Cart';
                     button.addEventListener('click', () => {
-                        const selectedSize = sizeDropdown.querySelector('select').getAttribute('data-selected');
-                        const selectedAmount = amountDropdown.querySelector('select').getAttribute('data-selected');
+                        const selectedSize = sizeDropdown.value;
+                        const selectedAmount = amountDropdown.value;
                         addToCart(file.name, selectedSize, selectedAmount);
                     });
                     li.appendChild(button);
-            
+    
                     imageList.appendChild(li);
                 }
             });

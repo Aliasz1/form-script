@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Script</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+<div class="images">
+    <h1>Images in Google Drive Folder</h1>
+    <ul id="imageList"></ul>
+</div>
+
+<form id="cart" onsubmit="submitCart()">
+<h2>Cart</h2>
+<label for="customerName">Customer Name</label>
+<input type="text" id="customerName" name="customerName" required ><br>
+<label for="contactNumber">Contact Number</label>
+<input type="text" id="contactNumber" name="contactNumber" required>
+<p>Your Cart: </p>'
+<div id="cartDataDisplay"></div>
+<button type="submit">Place Order</button>
+</form>
+</body></html>

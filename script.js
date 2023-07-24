@@ -1,5 +1,6 @@
     const folderId = '1m0Rv56pOhzJ_CUuJWDI6dvMNlnTcUiYf';
     const apiKey = 'AIzaSyDI76_OsUZmk53m6C5XTHYR2t_K1kb4ovw';
+    const cart = [];
     
     async function fetchImagesFromFolder() {
         try {
@@ -14,41 +15,41 @@
                     img.src = file.webContentLink || 'https://via.placeholder.com/150';
                     img.alt = file.name;
                     li.appendChild(img);
-    
-                    // Add name below the image
-                    const name = document.createElement('span');
-                    name.textContent = file.name;
-                    li.appendChild(name);
-    
-                    // Add size selection dropdown
-                    const sizeDropdown = createDropdown('Size', ['Small', 'Medium', 'Large']);
+        
+                    // Update the event listener for sizeDropdown
+                    const { dropdown: sizeDropdown, selected: selectedSize } = createDropdown('Size', ['90CM', '100CM']);
                     li.appendChild(sizeDropdown);
-    
-                    // Add amount selection dropdown
-                    const amountDropdown = createDropdown('Amount', ['1', '2', '3', '4', '5']);
+        
+                    // Update the event listener for amountDropdown
+                    const { dropdown: amountDropdown, selected: selectedAmount } = createDropdown('Amount', ['1', '2', '3', '4', '5']);
                     li.appendChild(amountDropdown);
-    
+        
                     // Add a button
                     const button = document.createElement('button');
                     button.textContent = 'Add to Cart';
                     button.addEventListener('click', () => {
-                        const selectedSize = sizeDropdown.value;
-                        const selectedAmount = amountDropdown.value;
                         addToCart(file.name, selectedSize, selectedAmount);
                     });
                     li.appendChild(button);
-    
+        
                     imageList.appendChild(li);
                 }
             });
+        
         } catch (error) {
             console.error('Error fetching images:', error);
         }
     }
     
     function addToCart(imageName, selectedSize, selectedAmount) {
-        // Replace this function with your desired functionality to add items to the cart.
-        // For example, you could store the selected items in an array or perform some other action.
+        // Add the selected item details to the cart array
+        cart.push({
+            name: imageName,
+            size: selectedSize,
+            amount: selectedAmount
+        });
+    
+        displayCartData();
         console.log(`Added "${imageName}" with size "${selectedSize}" and amount "${selectedAmount}" to the cart.`);
     }
     
@@ -69,7 +70,42 @@
             dropdown.appendChild(optionElem);
         });
     
-        return labelElem;
+        // Set the initial value for the data attribute
+        dropdown.setAttribute('data-selected', options[0]);
+    
+        return { dropdown, selected: options[0] };
+    }
+
+    function displayCartData() {
+        const cartDataDisplay = document.getElementById('cartDataDisplay');
+    
+        if (cart.length === 0) {
+            cartDataDisplay.innerHTML = '<p>Your Cart is empty.</p>';
+            return;
+        }
+    
+        cartDataDisplay.innerHTML = ''; // Clear previous contents
+    
+        const table = document.createElement('table');
+        table.innerHTML = `
+            <tr>
+                <th>Item Name</th>
+                <th>Size</th>
+                <th>Amount</th>
+            </tr>
+        `;
+    
+        cart.forEach(item => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${item.name}</td>
+                <td>${item.size}</td>
+                <td>${item.amount}</td>
+            `;
+            table.appendChild(row);
+        });
+    
+        cartDataDisplay.appendChild(table);
     }
     
     fetchImagesFromFolder();
